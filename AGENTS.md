@@ -17,21 +17,21 @@ This document records the agreed architecture. It does not assert that repositor
 
 ## Agreed stack
 
-| Concern | Default |
-| --- | --- |
-| Browser UI | Svelte 5 and TypeScript |
-| Development and builds | Vite with the Cloudflare Vite plugin |
-| Runtime and assets | Cloudflare Workers and Workers Static Assets |
-| Relational persistence | Cloudflare D1 (SQLite) with Drizzle ORM |
-| Flexible structured data | JSON, validated with Zod |
-| Live collaboration | Durable Objects and WebSockets |
-| Authentication | Cloudflare Access, with JWT verification in the Worker |
-| Authorization | Application-owned permissions, checked server-side |
-| Shared code | Versioned packages in GitHub Packages, developed in `cloudflare-platform` |
-| Automation | GitHub Actions, including reusable platform workflows |
-| Cloudflare tooling | Wrangler |
-| Testing | Vitest, plus Workers-runtime integration tests where needed |
-| Package management | pnpm with a committed lockfile |
+| Concern                  | Default                                                                   |
+| ------------------------ | ------------------------------------------------------------------------- |
+| Browser UI               | Svelte 5 and TypeScript                                                   |
+| Development and builds   | Vite with the Cloudflare Vite plugin                                      |
+| Runtime and assets       | Cloudflare Workers and Workers Static Assets                              |
+| Relational persistence   | Cloudflare D1 (SQLite) with Drizzle ORM                                   |
+| Flexible structured data | JSON, validated with Zod                                                  |
+| Live collaboration       | Durable Objects and WebSockets                                            |
+| Authentication           | Cloudflare Access, with JWT verification in the Worker                    |
+| Authorization            | Application-owned permissions, checked server-side                        |
+| Shared code              | Versioned packages in GitHub Packages, developed in `cloudflare-platform` |
+| Automation               | GitHub Actions, including reusable platform workflows                     |
+| Cloudflare tooling       | Wrangler                                                                  |
+| Testing                  | Vitest, plus Workers-runtime integration tests where needed               |
+| Package management       | pnpm with a committed lockfile                                            |
 
 Use Svelte 5 conventions for new UI code, small components, and strict TypeScript. Do not introduce SvelteKit, another backend framework, a separate application server, or a second deployment platform without a concrete requirement. Static-only applications need no database or Durable Object.
 
