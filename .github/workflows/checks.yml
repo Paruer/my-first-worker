@@ -1,0 +1,36 @@
+name: Checks
+
+# The manual deployment also calls this workflow. No inputs, outputs, or secrets.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Formatting
+            command: npm run format:check
+          - name: Tests
+            command: npm test -- --run
+          - name: Worker build
+            command: npm run deploy -- --dry-run
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: ${{ matrix.command }}
