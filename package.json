@@ -7,7 +7,7 @@
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "test": "vitest",
-    "test-once": "vitest run",
+    "test:once": "vitest run",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "types": "wrangler types",
