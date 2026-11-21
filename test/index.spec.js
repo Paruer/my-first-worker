@@ -4,7 +4,7 @@ import worker from '../src/worker';
 
 describe('Hello World worker', () => {
   it('responds with Hello World! (unit style)', async () => {
-    const request = new Request('http://example.com');
+    const request = new Request('http://example.com/api/message');
     // Create an empty context to pass to `worker.fetch()`.
     const ctx = createExecutionContext();
     const response = await worker.fetch(request, env, ctx);
@@ -14,7 +14,7 @@ describe('Hello World worker', () => {
   });
 
   it('responds with Hello World! (integration style)', async () => {
-    const response = await SELF.fetch('http://example.com');
+    const response = await SELF.fetch('http://example.com/api/message');
     expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
   });
 });

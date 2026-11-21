@@ -3,11 +3,11 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "lib": ["ES2022"],
     "types": [],
     "strict": true,
     "noEmit": true,
-    "skipLibCheck": true
-  },
-  "include": ["src/**/*.ts", "worker-configuration.d.ts"]
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true
+  }
 }
