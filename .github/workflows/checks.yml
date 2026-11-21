@@ -22,8 +22,10 @@ jobs:
             command: npm run format:check
           - name: Tests
             command: npm test -- --run
+          - name: TypeScript
+            command: npm run typecheck
           - name: Worker build
-            command: npm run deploy -- --dry-run
+            command: npm run build
     steps:
       - uses: actions/checkout@v6
         with:
