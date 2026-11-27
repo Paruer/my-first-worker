@@ -23,7 +23,7 @@ This document records the agreed architecture. It does not assert that repositor
 | Development and builds   | Vite with the Cloudflare Vite plugin                                      |
 | Runtime and assets       | Cloudflare Workers and Workers Static Assets                              |
 | Relational persistence   | Cloudflare D1 (SQLite) with Drizzle ORM                                   |
-| Flexible structured data | JSON, validated with Zod                                                  |
+| Flexible structured data | JSON                                                                      |
 | Live collaboration       | Durable Objects and WebSockets                                            |
 | Authentication           | Cloudflare Access, with JWT verification in the Worker                    |
 | Authorization            | Application-owned permissions, checked server-side                        |
@@ -68,11 +68,10 @@ Colocate focused unit tests if that matches the repository. Preserve the depende
 - This separation can be done as appropriate for the use case. For larger application it might make sense to have a "models" folder with separate ts files for each domain. For a type used for convenience in one function, it might make sense for it to live in the file where it is used. A middle ground might be a single "types.ts" file that defines the interfaces and types needed for the application.
 - We can decide the approach on a case-by-case basis but the bias should be toward separation so that business logic is easily found within our files.
 
-## D1, Drizzle, JSON, and Zod
+## D1, Drizzle, JSON
 
 - Use Drizzle's D1 adapter and typed schema for relational reads and writes. Keep SQL and persistence details behind adapters.
 - Use columns and constraints for identifiers, ownership, relations, uniqueness, and frequently queried fields. Use JSON for evolving nested game data that does not need relational modeling.
-- Validate external input and decoded stored JSON with Zod. TypeScript types alone provide no runtime validation. Version persisted JSON structures when their shape evolves and provide an explicit upgrade path.
 - Generate, inspect, commit, and test migrations. Use one documented migration history and runner; do not independently apply the same migration through multiple tools.
 - Apply migrations to local state first and staging before production. Confirm the target environment and database before remote operations.
 - Use D1-supported atomic operations where required; do not assume a generic SQLite transaction API works in D1. Design concurrent writes with constraints, conditional updates, or version checks.
