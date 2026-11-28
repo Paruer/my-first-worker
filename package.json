@@ -13,7 +13,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "types": "wrangler types",
-    "typecheck": "wrangler types --check && tsc -p ./src/worker/tsconfig.json && svelte-check --tsconfig ./src/ui/tsconfig.json",
+    "typecheck": "wrangler types --check && tsc -p ./src/worker/tsconfig.json && tsc -p ./test/worker/tsconfig.json && svelte-check --tsconfig ./src/ui/tsconfig.json",
     "build": "vite build"
   },
   "devDependencies": {

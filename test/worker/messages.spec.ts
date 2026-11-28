@@ -1,8 +1,10 @@
-import { applyD1Migrations, env, reset } from 'cloudflare:test';
+import { applyD1Migrations, reset } from 'cloudflare:test';
+import { env } from 'cloudflare:workers';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/d1';
-import { beforeEach, expect, it } from 'vitest';
-import { messages } from '../../src/infrastructure/messages';
+import { assert, beforeEach, expect, it } from 'vitest';
+import { messageStore, messages } from '../../src/infrastructure/messages';
+import type { MessageData } from '../../src/domain/message';
 
 beforeEach(async () => {
   await reset();
@@ -22,4 +24,17 @@ it('reads the requested message and decodes its JSON data', async () => {
 
   const row = await db.select().from(messages).where(eq(messages.id, 2)).get();
   expect(row).toEqual({ id: 2, data: { from: 'Tower', message: 'Clear for launch.' } });
+});
+
+it('retrieves a newly created message by its generated ID', async () => {
+  const store = messageStore(env.DB);
+  const input: MessageData = { from: 'Navigator', message: 'Course plotted.' };
+  const created = await store.create(input);
+
+  const found = await store.find(created);
+
+  expect(created.id).toEqual(expect.any(Number));
+  assert.isDefined(found);
+  expect(found.id).toBe(created.id);
+  expect(found.data).toEqual(input);
 });

@@ -13,7 +13,7 @@ export default defineConfig({
             miniflare: { bindings: { TEST_MIGRATIONS: await readD1Migrations('./migrations') } },
           }),
         ],
-        test: { name: 'worker', include: ['test/worker/*.spec.js'] },
+        test: { name: 'worker', include: ['test/worker/*.spec.{js,ts}'] },
       },
       {
         plugins: [svelte(), svelteTesting()],
